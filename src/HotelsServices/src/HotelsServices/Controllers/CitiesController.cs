@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using HotelsServices.Models;
 using HotelsServices.ViewModels.Home;
+using HotelsServices.Repositories;
 
 namespace HotelsServices.Controllers
 {
@@ -13,39 +14,27 @@ namespace HotelsServices.Controllers
     [Route("api/Cities")]
     public class CitiesController : Controller
     {
-        private static List<SearchNom> _cities = new List<SearchNom>()
-        {
-            new SearchNom(){id = "1", text = "София" },
-            new SearchNom(){id = "2", text = "Пловдив" },
-            new SearchNom(){id = "3", text = "Пазарджик" },
-        };
-
         private ApplicationDbContext _context;
+        private ICitiesRepository _citiesRepository;
 
         public CitiesController(ApplicationDbContext context)
         {
             _context = context;
+            _citiesRepository = new FakeCitiesRepository();
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}", Name = "GetCity")]
         public async Task<IActionResult> GetCity([FromRoute] string id)
         {
-            var city = _cities.Single(e => e.id == id);
-
-            return Ok(city);
+            return Ok(_citiesRepository.GetCity(id));
         }
         
         // POST: api/Cities
         [HttpPost]
         public async Task<IActionResult> PostCities(string term)
         {
-            var result = _cities;
-            if(!string.IsNullOrWhiteSpace(term))
-            {
-                result = result.Where(e => e.text.ToLower().Contains(term.ToLower())).ToList();
-            }
-            return Ok(result);
+            return Ok(_citiesRepository.GetCities(term));
         }
         
         protected override void Dispose(bool disposing)
