@@ -11,10 +11,12 @@ namespace HotelsServices.Controllers
     public class HomeController : Controller
     {
         private IHotelsRepository _hotelsRepository;
+        private ITranslateRepository _translateRepository;
 
         public HomeController()
         {
             _hotelsRepository = new FakeHotelsRepository();
+            _translateRepository = new FakeTranslateRepository();
         }
 
         public IActionResult Index(string cityId = null, string hotelId = null)
@@ -40,6 +42,8 @@ namespace HotelsServices.Controllers
         public IActionResult Details(string id, string lang = "")
         {
             var vm = _hotelsRepository.GetHotelDetails(id);
+
+            vm.Translate(_translateRepository, lang);
 
             return View(vm);
         }
