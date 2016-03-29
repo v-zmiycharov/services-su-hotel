@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using HotelsServices.ViewModels.Home;
 
 namespace HotelsServices.Controllers
 {
@@ -10,7 +11,9 @@ namespace HotelsServices.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var vm = new SearchVM();
+            
+            return View(vm);
         }
 
         public IActionResult About()
