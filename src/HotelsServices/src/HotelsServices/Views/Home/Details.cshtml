@@ -1,0 +1,31 @@
+﻿@model HotelsServices.ViewModels.Home.DetailsVM
+
+<div class="row">
+    <div class="col-md-6">
+        <h1>
+            @Model.Name
+            @for (int i = 0; i < Model.Stars; i++)
+            {
+                <img src="~/images/star.png" />
+            }
+        </h1>
+        <p class="lead">@Model.City, @Model.Address</p>
+        <p class="lead">Цена на вечер: <span class="badge">@Model.Price.ToString(".00") лв.</span></p>
+        <p class="lead">Брой стаи: <span class="badge">@Model.RoomsCount</span></p>
+        <p>@Model.Description</p>
+
+        @if (Model.Facilities != null && Model.Facilities.Count > 0)
+        {
+            <p><b>Удобства:</b></p>
+            <ul class="facilities">
+                @foreach (var facility in Model.Facilities)
+                {
+                    <li>@facility</li>
+                }
+            </ul>
+        }
+    </div>
+    <div class="col-md-6">
+
+    </div>
+</div>

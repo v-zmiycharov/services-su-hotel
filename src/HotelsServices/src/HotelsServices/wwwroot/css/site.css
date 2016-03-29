@@ -131,3 +131,15 @@
 	border-color: #ccc;
 }
 
+.badge {
+    font-size: 15px;
+    padding: 4px 8px;
+}
+
+ul.facilities {
+    padding-left: 30px;
+    list-style-image: url(../images/check.png);
+    color: #148C14;
+    font-size: 16px;
+}
+

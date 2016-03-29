@@ -10,6 +10,8 @@ namespace HotelsServices.ViewModels.Home
     public class SearchVM
     {
         public string CityId { get; set; }
+
+        [Required]
         public string HotelId { get; set; }
     }
 
