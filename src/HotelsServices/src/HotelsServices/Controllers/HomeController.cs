@@ -16,7 +16,7 @@ namespace HotelsServices.Controllers
         public HomeController()
         {
             _hotelsRepository = new FakeHotelsRepository();
-            _translateRepository = new FakeTranslateRepository();
+            _translateRepository = new YandexTranslateRepository();
         }
 
         public IActionResult Index(string cityId = null, string hotelId = null)
