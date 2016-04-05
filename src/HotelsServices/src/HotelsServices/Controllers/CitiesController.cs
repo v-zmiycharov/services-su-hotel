@@ -45,10 +45,5 @@ namespace HotelsServices.Controllers
             }
             base.Dispose(disposing);
         }
-
-        private bool ApplicationUserExists(string id)
-        {
-            return _context.ApplicationUser.Count(e => e.Id == id) > 0;
-        }
     }
 }

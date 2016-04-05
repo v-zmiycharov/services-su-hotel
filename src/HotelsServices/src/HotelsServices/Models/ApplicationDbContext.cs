@@ -8,7 +8,7 @@ using HotelsServices.Models;
 
 namespace HotelsServices.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : DbContext
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -17,6 +17,7 @@ namespace HotelsServices.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<HotelReservation> HotelReservation { get; set; }
     }
 }

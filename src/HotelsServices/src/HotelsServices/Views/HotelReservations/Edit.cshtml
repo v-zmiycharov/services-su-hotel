@@ -1,0 +1,68 @@
+@model HotelsServices.Models.HotelReservation
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>HotelReservation</h4>
+        <hr />
+        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="HotelReservationId" />
+        <div class="form-group">
+            <label asp-for="AdultsCount" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AdultsCount" class="form-control" />
+                <span asp-validation-for="AdultsCount" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ChildrenCount" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ChildrenCount" class="form-control" />
+                <span asp-validation-for="ChildrenCount" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreateDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CreateDate" class="form-control" />
+                <span asp-validation-for="CreateDate" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateFrom" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateFrom" class="form-control" />
+                <span asp-validation-for="DateFrom" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateTo" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateTo" class="form-control" />
+                <span asp-validation-for="DateTo" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="HotelId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="HotelId" class="form-control" />
+                <span asp-validation-for="HotelId" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
