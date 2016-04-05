@@ -50,3 +50,24 @@
         $(selector).select2('data', null).change();
     });
 }
+
+$(document).ready(function () {
+    $('input#reservation-submit').click( function() {
+        $.ajax({
+            url: '/api/HotelReservations',
+            type: 'post',
+            dataType: 'json',
+            data: $('form#reservation-form').serialize(),
+            success: function(data) {
+                
+            }
+        });
+    });
+
+    $('.datepicker').datepicker({
+        dateFormat: 'dd.mm.yy'
+    });
+
+    $('[name="DateFrom"].datepicker').datepicker("setDate", new Date(2016, 6, 15));
+    $('[name="DateTo"].datepicker').datepicker("setDate", new Date(2016, 6, 22));
+})

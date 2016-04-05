@@ -1,0 +1,47 @@
+@model IEnumerable<HotelsServices.Models.HotelReservation>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Хотел
+        </th>
+        <th>
+            Възрастни
+        </th>
+        <th>
+            Деца
+        </th>
+        <th>
+            Дата на резервация
+        </th>
+        <th>
+            От
+        </th>
+        <th>
+            До
+        </th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HotelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdultsCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChildrenCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateFrom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateTo)
+        </td>
+    </tr>
+}
+</table>

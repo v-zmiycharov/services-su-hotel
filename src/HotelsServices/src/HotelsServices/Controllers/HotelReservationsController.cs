@@ -1,100 +1,122 @@
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using HotelsServices.Models;
+using System;
 
 namespace HotelsServices.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/HotelReservations")]
     public class HotelReservationsController : Controller
     {
         private ApplicationDbContext _context;
 
         public HotelReservationsController(ApplicationDbContext context)
         {
-            _context = context;    
+            _context = context;
         }
 
-        // GET: HotelReservations
-        public IActionResult Index()
+        // GET: api/HotelReservations
+        [HttpGet]
+        public IEnumerable<HotelReservation> GetHotelReservation()
         {
-            return View(_context.HotelReservation.ToList());
+            return _context.HotelReservation;
         }
 
-        // GET: HotelReservations/Details/5
-        public IActionResult Details(int? id)
+        // GET: api/HotelReservations/5
+        [HttpGet("{id}", Name = "GetHotelReservation")]
+        public IActionResult GetHotelReservation([FromRoute] int id)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return HttpNotFound();
+                return HttpBadRequest(ModelState);
             }
 
             HotelReservation hotelReservation = _context.HotelReservation.Single(m => m.HotelReservationId == id);
+
             if (hotelReservation == null)
             {
                 return HttpNotFound();
             }
 
-            return View(hotelReservation);
+            return Ok(hotelReservation);
         }
 
-        // GET: HotelReservations/Create
-        public IActionResult Create()
+        // PUT: api/HotelReservations/5
+        [HttpPut("{id}")]
+        public IActionResult PutHotelReservation(int id, [FromBody] HotelReservation hotelReservation)
         {
-            return View();
-        }
-
-        // POST: HotelReservations/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(HotelReservation hotelReservation)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.HotelReservation.Add(hotelReservation);
+                return HttpBadRequest(ModelState);
+            }
+
+            if (id != hotelReservation.HotelReservationId)
+            {
+                return HttpBadRequest();
+            }
+
+            _context.Entry(hotelReservation).State = EntityState.Modified;
+
+            try
+            {
                 _context.SaveChanges();
-                return RedirectToAction("Index");
             }
-            return View(hotelReservation);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HotelReservationExists(id))
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return new HttpStatusCodeResult(StatusCodes.Status204NoContent);
         }
 
-        // GET: HotelReservations/Edit/5
-        public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-
-            HotelReservation hotelReservation = _context.HotelReservation.Single(m => m.HotelReservationId == id);
-            if (hotelReservation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hotelReservation);
-        }
-
-        // POST: HotelReservations/Edit/5
+        // POST: api/HotelReservations
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(HotelReservation hotelReservation)
+        public IActionResult PostHotelReservation(HotelReservation hotelReservation)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Update(hotelReservation);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return HttpBadRequest(ModelState);
             }
-            return View(hotelReservation);
+
+            hotelReservation.CreateDate = DateTime.Now;
+            _context.HotelReservation.Add(hotelReservation);
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (HotelReservationExists(hotelReservation.HotelReservationId))
+                {
+                    return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("GetHotelReservation", new { id = hotelReservation.HotelReservationId }, hotelReservation);
         }
 
-        // GET: HotelReservations/Delete/5
-        [ActionName("Delete")]
-        public IActionResult Delete(int? id)
+        // DELETE: api/HotelReservations/5
+        [HttpDelete("{id}")]
+        public IActionResult DeleteHotelReservation(int id)
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return HttpNotFound();
+                return HttpBadRequest(ModelState);
             }
 
             HotelReservation hotelReservation = _context.HotelReservation.Single(m => m.HotelReservationId == id);
@@ -103,18 +125,24 @@ namespace HotelsServices.Controllers
                 return HttpNotFound();
             }
 
-            return View(hotelReservation);
-        }
-
-        // POST: HotelReservations/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            HotelReservation hotelReservation = _context.HotelReservation.Single(m => m.HotelReservationId == id);
             _context.HotelReservation.Remove(hotelReservation);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Ok(hotelReservation);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool HotelReservationExists(int id)
+        {
+            return _context.HotelReservation.Count(e => e.HotelReservationId == id) > 0;
         }
     }
 }

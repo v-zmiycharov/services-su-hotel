@@ -37,6 +37,40 @@
         }
     </div>
     <div class="col-md-6">
+        <h1>Резервация</h1>
+        <form id="reservation-form">
+            <input type="hidden" name="HotelId" value="@Model.Id" />
+            <input type="hidden" name="HotelName" value="@Model.Name" />
+            <input type="hidden" name="CreateDate" value="@DateTime.Now.ToString("dd.MM.yyyy")" />
 
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>От</label>
+                    <input type="text" class="form-control datepicker" name="DateFrom" />
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>До</label>
+                    <input type="text" class="form-control datepicker" name="DateTo" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label>Възрастни</label>
+                    <select class="form-control" name="AdultsCount">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                    </select>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Деца</label>
+                    <select class="form-control" name="ChildrenCount">
+                        <option value="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+            </div>
+            <input type="button" class="btn btn-primary" id="reservation-submit" value="Резервирай" />
+        </form>
     </div>
 </div>

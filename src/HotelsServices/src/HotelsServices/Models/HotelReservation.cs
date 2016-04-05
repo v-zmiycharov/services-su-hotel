@@ -10,6 +10,7 @@ namespace HotelsServices.Models
     {
         [Key]
         public int HotelReservationId { get; set; }
+        public string HotelName { get; set; }
         public int HotelId { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime DateFrom { get; set; }

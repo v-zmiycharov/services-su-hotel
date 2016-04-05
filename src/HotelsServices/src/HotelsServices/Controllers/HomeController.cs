@@ -12,11 +12,13 @@ namespace HotelsServices.Controllers
     {
         private IHotelsRepository _hotelsRepository;
         private ITranslateRepository _translateRepository;
+        private IHotelReservationsRepository _hotelReservationsRepository;
 
         public HomeController()
         {
             _hotelsRepository = new FakeHotelsRepository();
             _translateRepository = new YandexTranslateRepository();
+            _hotelReservationsRepository = new HotelReservationsRepository();
         }
 
         public IActionResult Index(string cityId = null, string hotelId = null)
@@ -47,7 +49,14 @@ namespace HotelsServices.Controllers
 
             return View(vm);
         }
-        
+
+        public IActionResult HotelReservations()
+        {
+            var vm = _hotelReservationsRepository.GetHotelReservations();
+
+            return View(vm);
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
