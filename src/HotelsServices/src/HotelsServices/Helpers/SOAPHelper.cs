@@ -11,12 +11,22 @@ namespace HotelsServices.Helpers
 {
     public class SOAPHelper
     {
-        public static T CallWebService<T>(string action)
+        public static T CallWebServiceGET<T>(string action)
+        {
+            return CallWebService<T>(action, "GET");
+        }
+
+        public static T CallWebServicePOST<T>(string action)
+        {
+            return CallWebService<T>(action, "POST");
+        }
+
+        public static T CallWebService<T>(string action, string method)
         {
             var _url = "http://xxxxxxxxx/Service1.asmx";
 
             XmlDocument soapEnvelopeXml = CreateSoapEnvelope();
-            HttpWebRequest webRequest = CreateWebRequest(_url, action);
+            HttpWebRequest webRequest = CreateWebRequest(_url, action, method);
             InsertSoapEnvelopeIntoWebRequest(soapEnvelopeXml, webRequest);
 
             // begin async call to web request.
@@ -40,13 +50,13 @@ namespace HotelsServices.Helpers
             }
         }
 
-        private static HttpWebRequest CreateWebRequest(string url, string action)
+        private static HttpWebRequest CreateWebRequest(string url, string action, string method)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Headers.Add("SOAPAction", action);
             webRequest.ContentType = "text/xml;charset=\"utf-8\"";
             webRequest.Accept = "text/xml";
-            webRequest.Method = "POST";
+            webRequest.Method = method;
             return webRequest;
         }
 

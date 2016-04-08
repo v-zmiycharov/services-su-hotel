@@ -1,4 +1,5 @@
-﻿using HotelsServices.ViewModels.Home;
+﻿using HotelsServices.Helpers;
+using HotelsServices.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,20 @@ namespace HotelsServices.Repositories
                 result = result.Where(e => e.text.ToLower().Contains(term.ToLower())).ToList();
 
             return result;
+        }
+    }
+
+
+    public class SoapCitiesRepository : ICitiesRepository
+    {
+        public SearchNom GetCity(string id)
+        {
+            return SOAPHelper.CallWebServiceGET<SearchNom>(string.Format("action?id={0}", id));
+        }
+
+        public List<SearchNom> GetCities(string term)
+        {
+            return SOAPHelper.CallWebServiceGET<List<SearchNom>>(string.Format("action?term={0}", term));
         }
     }
 }

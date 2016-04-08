@@ -1,4 +1,5 @@
-﻿using HotelsServices.ViewModels.Home;
+﻿using HotelsServices.Helpers;
+using HotelsServices.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,24 @@ namespace HotelsServices.Repositories
                 RoomsCount = 77,
                 Stars = 4
             };
+        }
+    }
+
+    public class SoapHotelsRepository : IHotelsRepository
+    {
+        public SearchNom GetHotel(string id)
+        {
+            return SOAPHelper.CallWebServiceGET<SearchNom>(string.Format("action?id={0}", id));
+        }
+
+        public List<SearchNom> GetHotels(string term, string parentId)
+        {
+            return SOAPHelper.CallWebServiceGET<List<SearchNom>>(string.Format("action?term={0}&parentId={1}", term, parentId));
+        }
+
+        public DetailsVM GetHotelDetails(string id)
+        {
+            return SOAPHelper.CallWebServiceGET<DetailsVM>(string.Format("action?id={0}", id));
         }
     }
 }
