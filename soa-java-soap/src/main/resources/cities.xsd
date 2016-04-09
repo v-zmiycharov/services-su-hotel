@@ -1,0 +1,50 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://cities.sources.com"
+           targetNamespace="http://cities.sources.com" elementFormDefault="qualified">
+           
+    <xs:element name="getCityRequest">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="id" type="xs:unsignedInt"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getCityResponse">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="city" type="tns:city"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCitiesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="term" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCitiesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cities" type="tns:cities"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="cities">
+    	<xs:sequence>
+    		<xs:element name="city" type="tns:city" maxOccurs="unbounded"/>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="city">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+        
+        <xs:attribute name="id" type="xs:unsignedInt" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

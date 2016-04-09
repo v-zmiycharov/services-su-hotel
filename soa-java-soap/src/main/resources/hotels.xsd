@@ -1,0 +1,122 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://hotels.sources.com"
+           targetNamespace="http://hotels.sources.com" elementFormDefault="qualified">
+           
+    <xs:element name="getHotelRequest">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="id" type="xs:unsignedInt"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getHotelResponse">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="hotel" type="tns:hotel1"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+
+    <xs:element name="getHotelsRequest">
+        <xs:complexType>
+            <xs:sequence>
+            	<xs:element name="term" type="xs:string" use="optional"/>
+                <xs:element name="city_id" type="xs:unsignedInt"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getHotelsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="hotels" type="tns:hotels"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getHotelDetailsRequest">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="id" type="xs:unsignedInt"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getHotelDetailsResponse">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="hotel" type="tns:hotel"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+    
+    
+   	<xs:complexType name="hotels">
+   		<xs:sequence>
+   			<xs:element name="hotel" type="tns:hotel1" maxOccurs="unbounded"/>
+   		</xs:sequence>
+   		
+   		<xs:attribute name="city_id" type="xs:unsignedInt" use="required"/>
+   	</xs:complexType>
+
+	<xs:complexType name="hotel1">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+        
+        <xs:attribute name="id" type="xs:unsignedInt" use="required"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="hotel">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="stars" type="tns:stars"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="room_count" type="xs:unsignedInt"/>
+            <xs:element name="contacts" type="tns:contacts"/>
+            <xs:element name="price_list" type="tns:price_list"/>
+        </xs:sequence>
+        
+        <xs:attribute name="id" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="city_id" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="category" type="tns:category" use="required"/>
+    </xs:complexType>
+    
+    <xs:simpleType name="stars">
+    	<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1" />
+			<xs:maxInclusive value="5" />
+		</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="contacts">
+    	<xs:sequence>
+    		<xs:element name="address" type="xs:string"/>
+    		<xs:element name="phone_number" type="tns:phone_number"/>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="phone_number">
+    	<xs:restriction base="xs:string">
+    		<xs:pattern value="(\d{3} \d{3} \d{3})|(\d{2} \d{4} \d{3})"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="price_list">
+    	<xs:sequence>
+    		<xs:element name="single_room" type="xs:unsignedInt"/>
+    		<xs:element name="double_room" type="xs:unsignedInt"/>
+    		<xs:element name="triple_room" type="xs:unsignedInt"/>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="category">
+    	<xs:restriction base="xs:string">
+			<xs:enumeration value="business" />
+			<xs:enumeration value="family" />
+			<xs:enumeration value="spa" />
+		</xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

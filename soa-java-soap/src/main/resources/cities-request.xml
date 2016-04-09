@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+				  xmlns:gs="http://cities.sources.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <gs:getCitiesRequest>
+         <gs:term>v</gs:term>
+      </gs:getCitiesRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

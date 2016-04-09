@@ -1,0 +1,9 @@
+curl --header "content-type: text/xml" -d @city-request.xml http://localhost:8080/ws/cities -s | xmllint --format -
+curl --header "content-type: text/xml" -d @cities-request.xml http://localhost:8080/ws/cities -s | xmllint --format -
+
+curl --header "content-type: text/xml" -d @hotel-request.xml http://localhost:8080/ws/hotels -s | xmllint --format -
+curl --header "content-type: text/xml" -d @hotels-request.xml http://localhost:8080/ws/hotels -s | xmllint --format -
+curl --header "content-type: text/xml" -d @hotel-details-request.xml http://localhost:8080/ws/hotels -s | xmllint --format -
+
+WSDL files are auto-generated like source classes and are available at:
+http://localhost:8080/ws/cities.wsdl (hotels.wsdl)

@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+				  xmlns:gs="http://hotels.sources.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <gs:getHotelDetailsRequest>
+         <gs:id>6</gs:id>
+      </gs:getHotelDetailsRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
