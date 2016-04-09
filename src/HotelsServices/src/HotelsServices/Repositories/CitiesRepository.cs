@@ -57,7 +57,7 @@ namespace HotelsServices.Repositories
 
             var response = SOAPHelper.CallCitiesWebService<getCitiesResponse>(request);
             
-            response.cities.Select(e => new SearchNom() {id = e.id, text = e.name });
+            return response.cities.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
         }
     }
 }

@@ -59,6 +59,7 @@ namespace HotelsServices.Repositories
             {
                 Id = id,
                 Address = "бул. Д-р. Г.M. Димитров 75",
+                PhoneNumber = "0888 123 456",
                 City = "София",
                 Description = @"За релаксацията и добрата форма на нашите гости е предвиден обширен спортен и възстановителен център. За любителите на фитнеса има модерно оборудвана зала с уреди и професионални фитнес инструктори. На разположение са естетически издържани стаи, в които се предлагат всякакви разпускащи процедури и масажни програми. Гостите и клиентите на центъра могат да се освободят от стреса и натрупаното напрежение със сауна и парна баня. За ободряване и пълно разтоварване са специалните ни масажни програми, а за добър, здравословен тен е предведена зала със солариум.
                 Хотелът предлага и модерен фризьорски салон.В тях работят доказани професионалисти,
@@ -73,7 +74,9 @@ namespace HotelsServices.Repositories
                     "Паркинг"
                 },
                 Name = "Хотел Вега",
-                Price = 65,
+                SingleRoomPrice = 65,
+                DoubleRoomPrice = 75,
+                TripleRoomPrice = 85,
                 RoomsCount = 77,
                 Stars = 4
             };
@@ -96,11 +99,15 @@ namespace HotelsServices.Repositories
         {
             getHotelsRequest request = new getHotelsRequest();
             request.term = term;
-            request.city_id = parentId;
+
+            if(parentId.HasValue)
+            { 
+                request.city_id = parentId.Value;
+            }
 
             var response = SOAPHelper.CallHotelsWebService<getHotelsResponse>(request);
 
-            return response.hotels.hotel.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
+            return response.hotels.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
         }
 
         public DetailsVM GetHotelDetails(uint id)
@@ -121,7 +128,7 @@ namespace HotelsServices.Repositories
                 Name = response.hotel.name,
                 SingleRoomPrice = response.hotel.price_list.single_room,
                 DoubleRoomPrice = response.hotel.price_list.double_room,
-                ApartmentRoomPrice = response.hotel.price_list.triple_room,
+                TripleRoomPrice = response.hotel.price_list.triple_room,
                 RoomsCount = response.hotel.room_count,
                 Stars = response.hotel.stars
             };

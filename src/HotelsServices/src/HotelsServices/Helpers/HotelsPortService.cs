@@ -206,41 +206,6 @@ public partial class getHotelDetailsRequest {
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://hotels.sources.com")]
-public partial class hotels {
-    
-    private hotel1[] hotelField;
-    
-    private uint city_idField;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("hotel")]
-    public hotel1[] hotel {
-        get {
-            return this.hotelField;
-        }
-        set {
-            this.hotelField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public uint city_id {
-        get {
-            return this.city_idField;
-        }
-        set {
-            this.city_idField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("wsdl", "4.6.1055.0")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://hotels.sources.com")]
 public partial class hotel1 {
     
     private string nameField;
@@ -357,7 +322,7 @@ public partial class hotel {
     
     private string nameField;
     
-    private string starsField;
+    private int starsField;
     
     private string descriptionField;
     
@@ -367,9 +332,13 @@ public partial class hotel {
     
     private price_list price_listField;
     
+    private string facilitiesField;
+    
     private uint idField;
     
     private uint city_idField;
+    
+    private string city_nameField;
     
     private category categoryField;
     
@@ -384,8 +353,7 @@ public partial class hotel {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute(DataType="integer")]
-    public string stars {
+    public int stars {
         get {
             return this.starsField;
         }
@@ -435,6 +403,16 @@ public partial class hotel {
     }
     
     /// <remarks/>
+    public string facilities {
+        get {
+            return this.facilitiesField;
+        }
+        set {
+            this.facilitiesField = value;
+        }
+    }
+    
+    /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
     public uint id {
         get {
@@ -453,6 +431,17 @@ public partial class hotel {
         }
         set {
             this.city_idField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string city_name {
+        get {
+            return this.city_nameField;
+        }
+        set {
+            this.city_nameField = value;
         }
     }
     
@@ -557,7 +546,9 @@ public partial class getHotelsRequest {
     
     private string termField;
     
-    private uint? city_idField;
+    private uint city_idField;
+    
+    private bool city_idFieldSpecified;
     
     /// <remarks/>
     public string term {
@@ -570,12 +561,23 @@ public partial class getHotelsRequest {
     }
     
     /// <remarks/>
-    public uint? city_id {
+    public uint city_id {
         get {
             return this.city_idField;
         }
         set {
             this.city_idField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool city_idSpecified {
+        get {
+            return this.city_idFieldSpecified;
+        }
+        set {
+            this.city_idFieldSpecified = value;
         }
     }
 }
@@ -588,10 +590,11 @@ public partial class getHotelsRequest {
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://hotels.sources.com")]
 public partial class getHotelsResponse {
     
-    private hotels hotelsField;
+    private hotel1[] hotelsField;
     
     /// <remarks/>
-    public hotels hotels {
+    [System.Xml.Serialization.XmlArrayItemAttribute("hotel", IsNullable=false)]
+    public hotel1[] hotels {
         get {
             return this.hotelsField;
         }
