@@ -1,6 +1,7 @@
 package com.repositories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +28,7 @@ public class HotelsRepository {
 		Hotel h1 = new Hotel();
 		h1.setId(1);
 		h1.setCityId(2);
+		h1.setCityName("Sofia");
 		h1.setCategory(Category.BUSINESS);
 		h1.setName("Sofia Hotel Balkan");
 		h1.setStars(5);
@@ -41,10 +43,14 @@ public class HotelsRepository {
 		p1.setDoubleRoom(112);
 		p1.setTripleRoom(120);
 		h1.setPriceList(p1);
+		List<String> f1 = new ArrayList<String>(Arrays.asList(
+				new String[] {""} ));
+		h1.getFacilities().addAll(f1);
 		
 		Hotel h2 = new Hotel();
 		h2.setId(2);
 		h2.setCityId(2);
+		h2.setCityName("Sofia");
 		h2.setCategory(Category.SPA);
 		h2.setName("Holiday Inn Sofia");
 		h2.setStars(5);
@@ -59,6 +65,9 @@ public class HotelsRepository {
 		p2.setDoubleRoom(170);
 		p2.setTripleRoom(0);
 		h2.setPriceList(p2);
+		List<String> f2 = new ArrayList<String>(Arrays.asList(
+				new String[] {""} ));
+		h2.getFacilities().addAll(f2);
 		
 		hotelsList.add(h1);
 		hotelsList.add(h2);
@@ -68,6 +77,7 @@ public class HotelsRepository {
 		Hotel h3 = new Hotel();
 		h3.setId(3);
 		h3.setCityId(1);
+		h3.setCityName("Varna");
 		h3.setCategory(Category.BUSINESS);
 		h3.setName("Boutique Splendid Hotel");
 		h3.setStars(4);
@@ -82,6 +92,9 @@ public class HotelsRepository {
 		p3.setDoubleRoom(53);
 		p3.setTripleRoom(0);
 		h3.setPriceList(p3);
+		List<String> f3 = new ArrayList<String>(Arrays.asList(
+				new String[] {""} ));
+		h3.getFacilities().addAll(f3);
 		
 		hotelsList.add(h3);
 		
@@ -90,6 +103,7 @@ public class HotelsRepository {
 		Hotel h4 = new Hotel();
 		h4.setId(4);
 		h4.setCityId(3);
+		h4.setCityName("Plovdiv");
 		h4.setCategory(Category.BUSINESS);
 		h4.setName("Hotel Imperial");
 		h4.setStars(4);
@@ -104,6 +118,9 @@ public class HotelsRepository {
 		p4.setDoubleRoom(81);
 		p4.setTripleRoom(81);
 		h4.setPriceList(p4);
+		List<String> f4 = new ArrayList<String>(Arrays.asList(
+				new String[] {""} ));
+		h4.getFacilities().addAll(f4);
 		
 		hotelsList.add(h4);
 		
@@ -112,6 +129,7 @@ public class HotelsRepository {
 		Hotel h5 = new Hotel();
 		h5.setId(5);
 		h5.setCityId(5);
+		h5.setCityName("Veliko Tarnovo");
 		h5.setCategory(Category.FAMILY);
 		h5.setName("Hotel Concorde");
 		h5.setStars(3);
@@ -126,6 +144,9 @@ public class HotelsRepository {
 		p5.setDoubleRoom(69);
 		p5.setTripleRoom(76);
 		h5.setPriceList(p5);
+		List<String> f5 = new ArrayList<String>(Arrays.asList(
+				new String[] {""} ));
+		h5.getFacilities().addAll(f5);
 		
 		hotelsList.add(h5);
 		
@@ -134,6 +155,7 @@ public class HotelsRepository {
 		Hotel h6 = new Hotel();
 		h6.setId(6);
 		h6.setCityId(4);
+		h6.setCityName("Ruse");
 		h6.setCategory(Category.BUSINESS);
 		h6.setName("Riga Hotel");
 		h6.setStars(3);
@@ -148,12 +170,16 @@ public class HotelsRepository {
 		p6.setDoubleRoom(66);
 		p6.setTripleRoom(0);
 		h6.setPriceList(p6);
+		List<String> f6 = new ArrayList<String>(Arrays.asList(
+				new String[] {""} ));
+		h6.getFacilities().addAll(f6);
 		
 		hotelsList.add(h6);
 		
 		// Hotels in Burgas
 		Hotel h7 = new Hotel();
 		h7.setId(7);
+		h7.setCityName("Burgas");
 		h7.setCityId(6);
 		h7.setCategory(Category.FAMILY);
 		h7.setName("Hotel Lazuren Briag");
@@ -169,6 +195,9 @@ public class HotelsRepository {
 		p7.setDoubleRoom(31);
 		p7.setTripleRoom(34);
 		h7.setPriceList(p7);
+		List<String> f7 = new ArrayList<String>(Arrays.asList(
+				new String[] {""} ));
+		h7.getFacilities().addAll(f7);
 		
 		hotelsList.add(h7);
 	}
@@ -191,16 +220,17 @@ public class HotelsRepository {
 	
 	
 	public Hotels findHotels(String term, long cityId) {
-		Assert.notNull(cityId);
-		
 		Hotels result = new Hotels();
-		result.setCityId(cityId);
 		
 		for (Hotel hotel : hotelsList) {
-			if (hotel.getCityId() == cityId
-					&& (term != null && !term.isEmpty()
-						&& hotel.getName().toLowerCase().contains(term.toLowerCase()))
-					) {
+			if (
+				( cityId != 0 && hotel.getCityId() == cityId
+					&& (term.equals(null) || term.isEmpty()) )
+				|| ( cityId != 0 && hotel.getCityId() == cityId
+					&& term != null && !term.isEmpty()
+					&& hotel.getName().toLowerCase().contains(term.toLowerCase()) )
+				|| ( cityId == 0 && (term == null || term.isEmpty()) )
+				) {
 				Hotel1 h = new Hotel1();
 				h.setId(hotel.getId());
 				h.setName(hotel.getName());

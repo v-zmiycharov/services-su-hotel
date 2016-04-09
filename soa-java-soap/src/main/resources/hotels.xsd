@@ -21,7 +21,7 @@
         <xs:complexType>
             <xs:sequence>
             	<xs:element name="term" type="xs:string" use="optional"/>
-                <xs:element name="city_id" type="xs:unsignedInt"/>
+                <xs:element name="city_id" type="xs:unsignedInt" use="optional"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -55,8 +55,6 @@
    		<xs:sequence>
    			<xs:element name="hotel" type="tns:hotel1" maxOccurs="unbounded"/>
    		</xs:sequence>
-   		
-   		<xs:attribute name="city_id" type="xs:unsignedInt" use="required"/>
    	</xs:complexType>
 
 	<xs:complexType name="hotel1">
@@ -76,15 +74,17 @@
             <xs:element name="room_count" type="xs:unsignedInt"/>
             <xs:element name="contacts" type="tns:contacts"/>
             <xs:element name="price_list" type="tns:price_list"/>
+            <xs:element name="facilities" type="tns:facilities"/>
         </xs:sequence>
         
         <xs:attribute name="id" type="xs:unsignedInt" use="required"/>
         <xs:attribute name="city_id" type="xs:unsignedInt" use="required"/>
+        <xs:attribute name="city_name" type="xs:string" use="required"/>
         <xs:attribute name="category" type="tns:category" use="required"/>
     </xs:complexType>
     
     <xs:simpleType name="stars">
-    	<xs:restriction base="xs:integer">
+    	<xs:restriction base="xs:int">
 			<xs:minInclusive value="1" />
 			<xs:maxInclusive value="5" />
 		</xs:restriction>
@@ -110,6 +110,10 @@
     		<xs:element name="triple_room" type="xs:unsignedInt"/>
     	</xs:sequence>
     </xs:complexType>
+    
+    <xs:simpleType name="facilities">
+    	<xs:list itemType="xs:string"/>
+    </xs:simpleType>
     
     <xs:simpleType name="category">
     	<xs:restriction base="xs:string">

@@ -63,14 +63,16 @@ public class CityRepository {
 	}
 	
 	public Cities findCities(String term) {
-		Assert.notNull(term);
-		
 		List<City> list = new ArrayList<City>();
 		
-		for (City city: cities) {
-			if ( city.getName().toLowerCase().contains(term.toLowerCase()) ) {
-				list.add(city);
+		if (!term.equals(null) && !term.isEmpty()) {
+			for (City city: cities) {
+				if ( city.getName().toLowerCase().contains(term.toLowerCase()) ) {
+					list.add(city);
+				}
 			}
+		} else {
+			list.addAll(cities);
 		}
 		
 		Cities result = new Cities();
