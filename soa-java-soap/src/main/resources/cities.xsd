@@ -20,7 +20,7 @@
     <xs:element name="getCitiesRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="term" type="xs:string" use="optional" minOccurs="0"/>
+                <xs:element name="term" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
