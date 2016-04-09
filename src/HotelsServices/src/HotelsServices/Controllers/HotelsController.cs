@@ -20,7 +20,7 @@ namespace HotelsServices.Controllers
         public HotelsController(ApplicationDbContext context)
         {
             _context = context;
-            _hotelsRepository = new FakeHotelsRepository();
+            _hotelsRepository = new SoapHotelsRepository();
         }
 
         // GET: api/Hotels/5

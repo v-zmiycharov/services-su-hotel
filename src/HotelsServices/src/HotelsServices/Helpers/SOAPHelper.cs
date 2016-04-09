@@ -12,17 +12,17 @@ namespace HotelsServices.Helpers
 {
     public class SOAPHelper
     {
-        public static T CallCitiesWebService<T>(object request)
+        public static T CallCitiesWebService<T, T1>(T1 request)
         {
-            return CallWebService<T>("http://localhost:8080/ws/cities", request);
+            return CallWebService<T, T1>("http://localhost:8080/ws/cities", request);
         }
 
-        public static T CallHotelsWebService<T>(object request)
+        public static T CallHotelsWebService<T, T1>(T1 request)
         {
-            return CallWebService<T>("http://localhost:8080/ws/hotels", request);
+            return CallWebService<T, T1>("http://localhost:8080/ws/hotels", request);
         }
 
-        public static T CallWebService<T>(string url, object request)
+        public static T CallWebService<T, T1>(string url, T1 request)
         {
             XmlDocument soapEnvelopeXml = CreateSoapEnvelope();
             HttpWebRequest webRequest = CreateWebRequest(url, "", "POST", request);
@@ -49,7 +49,7 @@ namespace HotelsServices.Helpers
             }
         }
 
-        private static HttpWebRequest CreateWebRequest(string url, string action, string method, object request)
+        private static HttpWebRequest CreateWebRequest<T1>(string url, string action, string method, T1 request)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Headers.Add("SOAPAction", action);

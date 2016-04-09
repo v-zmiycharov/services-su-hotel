@@ -16,7 +16,7 @@ namespace HotelsServices.Controllers
 
         public HomeController()
         {
-            _hotelsRepository = new FakeHotelsRepository();
+            _hotelsRepository = new SoapHotelsRepository();
             _translateRepository = new YandexTranslateRepository();
             _hotelReservationsRepository = new HotelReservationsRepository();
         }

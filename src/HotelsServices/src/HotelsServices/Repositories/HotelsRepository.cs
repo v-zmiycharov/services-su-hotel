@@ -90,7 +90,7 @@ namespace HotelsServices.Repositories
             getHotelRequest request = new getHotelRequest();
             request.id = id;
 
-            var response = SOAPHelper.CallHotelsWebService<getHotelResponse>(request);
+            var response = SOAPHelper.CallHotelsWebService<getHotelResponse, getHotelRequest>(request);
 
             return new SearchNom() { id = response.hotel.id, text = response.hotel.name };
         }
@@ -105,7 +105,7 @@ namespace HotelsServices.Repositories
                 request.city_id = parentId.Value;
             }
 
-            var response = SOAPHelper.CallHotelsWebService<getHotelsResponse>(request);
+            var response = SOAPHelper.CallHotelsWebService<getHotelsResponse, getHotelsRequest>(request);
 
             return response.hotels.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
         }
@@ -115,7 +115,7 @@ namespace HotelsServices.Repositories
             getHotelDetailsRequest request = new getHotelDetailsRequest();
             request.id = id;
 
-            var response = SOAPHelper.CallHotelsWebService<getHotelDetailsResponse>(request);
+            var response = SOAPHelper.CallHotelsWebService<getHotelDetailsResponse, getHotelDetailsRequest>(request);
 
             return new DetailsVM()
             {
@@ -123,7 +123,7 @@ namespace HotelsServices.Repositories
                 PhoneNumber = response.hotel.contacts.phone_number,
                 City = response.hotel.city_name,
                 Description = response.hotel.description,
-                Facilities = response.hotel.facilities,
+                Facilities = response.hotel.facilities.ToList(),
                 Id = response.hotel.id,
                 Name = response.hotel.name,
                 SingleRoomPrice = response.hotel.price_list.single_room,

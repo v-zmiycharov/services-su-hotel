@@ -332,7 +332,7 @@ public partial class hotel {
     
     private price_list price_listField;
     
-    private string facilitiesField;
+    private string[] facilitiesField;
     
     private uint idField;
     
@@ -403,7 +403,7 @@ public partial class hotel {
     }
     
     /// <remarks/>
-    public string facilities {
+    public string[] facilities {
         get {
             return this.facilitiesField;
         }

@@ -45,7 +45,7 @@ namespace HotelsServices.Repositories
             getCityRequest request = new getCityRequest();
             request.id = id;
 
-            var response = SOAPHelper.CallCitiesWebService<getCityResponse>(request);
+            var response = SOAPHelper.CallCitiesWebService<getCityResponse, getCityRequest>(request);
 
             return new SearchNom() { id = response.city.id, text = response.city.name };
         }
@@ -55,7 +55,7 @@ namespace HotelsServices.Repositories
             getCitiesRequest request = new getCitiesRequest();
             request.term = term;
 
-            var response = SOAPHelper.CallCitiesWebService<getCitiesResponse>(request);
+            var response = SOAPHelper.CallCitiesWebService<getCitiesResponse, getCitiesRequest>(request);
             
             return response.cities.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
         }
