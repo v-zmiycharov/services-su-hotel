@@ -9,7 +9,7 @@ namespace HotelsServices.Repositories
 {
     public interface ICitiesRepository
     {
-        SearchNom GetCity(string id);
+        SearchNom GetCity(uint id);
         List<SearchNom> GetCities(string term);
     }
 
@@ -17,12 +17,12 @@ namespace HotelsServices.Repositories
     {
         private static List<SearchNom> _cities = new List<SearchNom>()
         {
-            new SearchNom(){id = "1", text = "София" },
-            new SearchNom(){id = "2", text = "Пловдив" },
-            new SearchNom(){id = "3", text = "Пазарджик" },
+            new SearchNom(){id = 1, text = "София" },
+            new SearchNom(){id = 2, text = "Пловдив" },
+            new SearchNom(){id = 3, text = "Пазарджик" },
         };
 
-        public SearchNom GetCity(string id)
+        public SearchNom GetCity(uint id)
         {
             return _cities.Single(e => e.id == id);
         }
@@ -40,14 +40,24 @@ namespace HotelsServices.Repositories
 
     public class SoapCitiesRepository : ICitiesRepository
     {
-        public SearchNom GetCity(string id)
+        public SearchNom GetCity(uint id)
         {
-            return SOAPHelper.CallWebServiceGET<SearchNom>(string.Format("action?id={0}", id));
+            getCityRequest request = new getCityRequest();
+            request.id = id;
+
+            var response = SOAPHelper.CallCitiesWebService<getCityResponse>(request);
+
+            return new SearchNom() { id = response.city.id, text = response.city.name };
         }
 
         public List<SearchNom> GetCities(string term)
         {
-            return SOAPHelper.CallWebServiceGET<List<SearchNom>>(string.Format("action?term={0}", term));
+            getCitiesRequest request = new getCitiesRequest();
+            request.term = term;
+
+            var response = SOAPHelper.CallCitiesWebService<getCitiesResponse>(request);
+            
+            response.cities.Select(e => new SearchNom() {id = e.id, text = e.name });
         }
     }
 }

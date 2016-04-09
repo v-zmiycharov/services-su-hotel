@@ -9,38 +9,38 @@ namespace HotelsServices.Repositories
 {
     public interface IHotelsRepository
     {
-        SearchNom GetHotel(string id);
-        List<SearchNom> GetHotels(string term, string parentId);
-        DetailsVM GetHotelDetails(string id);
+        SearchNom GetHotel(uint id);
+        List<SearchNom> GetHotels(string term, uint? parentId);
+        DetailsVM GetHotelDetails(uint id);
     }
 
     public class FakeHotelsRepository : IHotelsRepository
     {
         private static List<SearchNom> _hotels = new List<SearchNom>()
         {
-            new SearchNom(){id = "1", text = "Плиска", parentId = "1" },
-            new SearchNom(){id = "2", text = "Гранд хотел София", parentId = "1" },
-            new SearchNom(){id = "3", text = "Вега", parentId = "1" },
+            new SearchNom(){id = 1, text = "Плиска", parentId = 1 },
+            new SearchNom(){id = 2, text = "Гранд хотел София", parentId = 1 },
+            new SearchNom(){id = 3, text = "Вега", parentId = 1 },
 
-            new SearchNom(){id = "4", text = "Тримонциум", parentId = "2" },
-            new SearchNom(){id = "5", text = "Санкт Петербург", parentId = "2" },
-            new SearchNom(){id = "6", text = "Империал", parentId = "2" },
+            new SearchNom(){id = 4, text = "Тримонциум", parentId = 2 },
+            new SearchNom(){id = 5, text = "Санкт Петербург", parentId = 2 },
+            new SearchNom(){id = 6, text = "Империал", parentId = 2 },
 
-            new SearchNom(){id = "7", text = "Тракия", parentId = "3" },
-            new SearchNom(){id = "8", text = "Елбрус", parentId = "3" },
-            new SearchNom(){id = "9", text = "Хебър", parentId = "3" },
+            new SearchNom(){id = 7, text = "Тракия", parentId = 3 },
+            new SearchNom(){id = 8, text = "Елбрус", parentId = 3 },
+            new SearchNom(){id = 9, text = "Хебър", parentId = 3 },
         };
 
-        public SearchNom GetHotel(string id)
+        public SearchNom GetHotel(uint id)
         {
             return _hotels.Single(e => e.id == id);
         }
 
-        public List<SearchNom> GetHotels(string term, string parentId)
+        public List<SearchNom> GetHotels(string term, uint? parentId)
         {
             List<SearchNom> result = _hotels;
 
-            if (!string.IsNullOrWhiteSpace(parentId))
+            if (parentId.HasValue)
             {
                 result = result.Where(e => e.parentId.Equals(parentId)).ToList();
             }
@@ -53,7 +53,7 @@ namespace HotelsServices.Repositories
             return result;
         }
 
-        public DetailsVM GetHotelDetails(string id)
+        public DetailsVM GetHotelDetails(uint id)
         {
             return new DetailsVM()
             {
@@ -82,19 +82,49 @@ namespace HotelsServices.Repositories
 
     public class SoapHotelsRepository : IHotelsRepository
     {
-        public SearchNom GetHotel(string id)
+        public SearchNom GetHotel(uint id)
         {
-            return SOAPHelper.CallWebServiceGET<SearchNom>(string.Format("action?id={0}", id));
+            getHotelRequest request = new getHotelRequest();
+            request.id = id;
+
+            var response = SOAPHelper.CallHotelsWebService<getHotelResponse>(request);
+
+            return new SearchNom() { id = response.hotel.id, text = response.hotel.name };
         }
 
-        public List<SearchNom> GetHotels(string term, string parentId)
+        public List<SearchNom> GetHotels(string term, uint? parentId)
         {
-            return SOAPHelper.CallWebServiceGET<List<SearchNom>>(string.Format("action?term={0}&parentId={1}", term, parentId));
+            getHotelsRequest request = new getHotelsRequest();
+            request.term = term;
+            request.city_id = parentId;
+
+            var response = SOAPHelper.CallHotelsWebService<getHotelsResponse>(request);
+
+            return response.hotels.hotel.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
         }
 
-        public DetailsVM GetHotelDetails(string id)
+        public DetailsVM GetHotelDetails(uint id)
         {
-            return SOAPHelper.CallWebServiceGET<DetailsVM>(string.Format("action?id={0}", id));
+            getHotelDetailsRequest request = new getHotelDetailsRequest();
+            request.id = id;
+
+            var response = SOAPHelper.CallHotelsWebService<getHotelDetailsResponse>(request);
+
+            return new DetailsVM()
+            {
+                Address = response.hotel.contacts.address,
+                PhoneNumber = response.hotel.contacts.phone_number,
+                City = response.hotel.city_name,
+                Description = response.hotel.description,
+                Facilities = response.hotel.facilities,
+                Id = response.hotel.id,
+                Name = response.hotel.name,
+                SingleRoomPrice = response.hotel.price_list.single_room,
+                DoubleRoomPrice = response.hotel.price_list.double_room,
+                ApartmentRoomPrice = response.hotel.price_list.triple_room,
+                RoomsCount = response.hotel.room_count,
+                Stars = response.hotel.stars
+            };
         }
     }
 }

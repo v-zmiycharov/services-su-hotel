@@ -41,7 +41,7 @@ namespace HotelsServices.Controllers
             return RedirectToAction("Details", new { id = vm.HotelId });
         }
 
-        public IActionResult Details(string id, string lang = "")
+        public IActionResult Details(uint id, string lang = "")
         {
             var vm = _hotelsRepository.GetHotelDetails(id);
 
