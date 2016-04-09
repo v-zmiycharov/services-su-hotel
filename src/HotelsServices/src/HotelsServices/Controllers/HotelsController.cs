@@ -25,14 +25,14 @@ namespace HotelsServices.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}", Name = "GetHotel")]
-        public async Task<IActionResult> GetHotel([FromRoute] string id)
+        public async Task<IActionResult> GetHotel([FromRoute] uint id)
         {
             return Ok(_hotelsRepository.GetHotel(id));
         }
 
         // POST: api/Hotels
         [HttpPost]
-        public async Task<IActionResult> PostHotels(string term, string parentId)
+        public async Task<IActionResult> PostHotels(string term, uint? parentId)
         {
             return Ok(_hotelsRepository.GetHotels(term, parentId));
         }

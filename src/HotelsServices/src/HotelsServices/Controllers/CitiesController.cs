@@ -25,7 +25,7 @@ namespace HotelsServices.Controllers
 
         // GET: api/Cities/5
         [HttpGet("{id}", Name = "GetCity")]
-        public async Task<IActionResult> GetCity([FromRoute] string id)
+        public async Task<IActionResult> GetCity([FromRoute] uint id)
         {
             return Ok(_citiesRepository.GetCity(id));
         }

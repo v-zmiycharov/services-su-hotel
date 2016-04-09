@@ -37,11 +37,9 @@
     "dnx451": {
       "dependencies": {
         "System.Net.Http": "4.0.1-beta-23516"
-      }
-    },
-    "dnxcore50": {
-      "dependencies": {
-        "System.Net.Http": "4.0.1-beta-23516"
+      },
+      "frameworkAssemblies": {
+        "System.Web.Services": "4.0.0.0"
       }
     }
   },

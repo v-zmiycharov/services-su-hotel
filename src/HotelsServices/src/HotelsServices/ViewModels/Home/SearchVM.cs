@@ -17,8 +17,8 @@ namespace HotelsServices.ViewModels.Home
 
     public class SearchNom
     {
-        public string id { get; set; }
+        public uint id { get; set; }
         public string text { get; set; }
-        public string parentId { get; set; }
+        public uint? parentId { get; set; }
     }
 }

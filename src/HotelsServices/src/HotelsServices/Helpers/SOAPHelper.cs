@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -11,22 +12,20 @@ namespace HotelsServices.Helpers
 {
     public class SOAPHelper
     {
-        public static T CallWebServiceGET<T>(string action)
+        public static T CallCitiesWebService<T>(object request)
         {
-            return CallWebService<T>(action, "GET");
+            return CallWebService<T>("http://localhost:8080/ws/cities", request);
         }
 
-        public static T CallWebServicePOST<T>(string action)
+        public static T CallHotelsWebService<T>(object request)
         {
-            return CallWebService<T>(action, "POST");
+            return CallWebService<T>("http://localhost:8080/ws/hotels", request);
         }
 
-        public static T CallWebService<T>(string action, string method)
+        public static T CallWebService<T>(string url, object request)
         {
-            var _url = "http://xxxxxxxxx/Service1.asmx";
-
             XmlDocument soapEnvelopeXml = CreateSoapEnvelope();
-            HttpWebRequest webRequest = CreateWebRequest(_url, action, method);
+            HttpWebRequest webRequest = CreateWebRequest(url, "", "POST", request);
             InsertSoapEnvelopeIntoWebRequest(soapEnvelopeXml, webRequest);
 
             // begin async call to web request.
@@ -50,13 +49,21 @@ namespace HotelsServices.Helpers
             }
         }
 
-        private static HttpWebRequest CreateWebRequest(string url, string action, string method)
+        private static HttpWebRequest CreateWebRequest(string url, string action, string method, object request)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
             webRequest.Headers.Add("SOAPAction", action);
             webRequest.ContentType = "text/xml;charset=\"utf-8\"";
             webRequest.Accept = "text/xml";
             webRequest.Method = method;
+            
+            var stringwriter = new StringWriter();
+            var serializer = new XmlSerializer(request.GetType());
+            serializer.Serialize(stringwriter, request);
+            byte[] buf = Encoding.UTF8.GetBytes(stringwriter.ToString());
+            webRequest.ContentLength = buf.Length;
+            webRequest.GetRequestStream().Write(buf, 0, buf.Length);
+
             return webRequest;
         }
 
