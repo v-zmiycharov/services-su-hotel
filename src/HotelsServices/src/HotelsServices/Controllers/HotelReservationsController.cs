@@ -23,7 +23,7 @@ namespace HotelsServices.Controllers
         [HttpGet]
         public IEnumerable<HotelReservation> GetHotelReservation()
         {
-            return _context.HotelReservation;
+            return _context.HotelReservation.OrderByDescending(e=>e.HotelReservationId);
         }
 
         // GET: api/HotelReservations/5

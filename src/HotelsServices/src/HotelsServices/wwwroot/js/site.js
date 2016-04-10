@@ -59,7 +59,7 @@ $(document).ready(function () {
             dataType: 'json',
             data: $('form#reservation-form').serialize(),
             success: function(data) {
-                
+                window.location.href = "/Home/HotelReservations"
             }
         });
     });
