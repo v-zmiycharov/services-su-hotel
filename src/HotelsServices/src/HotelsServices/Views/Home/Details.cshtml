@@ -21,15 +21,15 @@
             }
         </h1>
         <p class="lead">@Model.PhoneNumber, @Model.City, @Model.Address</p>
-        <p class="lead">Единична стая: <span class="badge">@Model.SingleRoomPrice.ToString(".00") лв.</span></p>
-        <p class="lead">Двойна стая: <span class="badge">@Model.DoubleRoomPrice.ToString(".00") лв.</span></p>
-        <p class="lead">Апартамент: <span class="badge">@Model.TripleRoomPrice.ToString(".00") лв.</span></p>
-        <p class="lead">Брой стаи: <span class="badge">@Model.RoomsCount</span></p>
+        <p class="lead">@Model.LabelSingleRoom <span class="badge">@Model.SingleRoomPrice.ToString(".00") @Model.LabelLv</span></p>
+        <p class="lead">@Model.LabelDoubleRoom <span class="badge">@Model.DoubleRoomPrice.ToString(".00") @Model.LabelLv</span></p>
+        <p class="lead">@Model.LabelTripleRoom <span class="badge">@Model.TripleRoomPrice.ToString(".00") @Model.LabelLv</span></p>
+        <p class="lead">@Model.LabelRoomsCount <span class="badge">@Model.RoomsCount</span></p>
         <p>@Model.Description</p>
 
         @if (Model.Facilities != null && Model.Facilities.Count > 0)
         {
-            <p><b>Удобства:</b></p>
+            <p><b>@Model.LabelFacilities</b></p>
             <ul class="facilities">
                 @foreach (var facility in Model.Facilities)
                 {

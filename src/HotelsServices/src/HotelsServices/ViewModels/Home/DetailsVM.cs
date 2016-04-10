@@ -23,6 +23,23 @@ namespace HotelsServices.ViewModels.Home
         public int Stars { get; set; }
         public List<string> Facilities { get; set; }
 
+        public string LabelSingleRoom { get; set; }
+        public string LabelDoubleRoom { get; set; }
+        public string LabelTripleRoom { get; set; }
+        public string LabelRoomsCount { get; set; }
+        public string LabelLv { get; set; }
+        public string LabelFacilities { get; set; }
+
+        public DetailsVM()
+        {
+            this.LabelSingleRoom = "Единична стая:";
+            this.LabelDoubleRoom = "Двойна стая:";
+            this.LabelTripleRoom = "Апартамент:";
+            this.LabelRoomsCount = "Брой стаи:";
+            this.LabelLv = "лева";
+            this.LabelFacilities = "Удобства";
+        }
+
         public void Translate(ITranslateRepository translateRepository, string toLang)
         {
             if (!String.IsNullOrWhiteSpace(toLang))
@@ -42,6 +59,13 @@ namespace HotelsServices.ViewModels.Home
                     foreach (var facility in oldFacilities)
                         this.Facilities.Add(translateRepository.TranslateFromBg(facility, toLang));
                 }
+
+                this.LabelSingleRoom = translateRepository.TranslateFromBg(this.LabelSingleRoom, toLang);
+                this.LabelDoubleRoom = translateRepository.TranslateFromBg(this.LabelDoubleRoom, toLang);
+                this.LabelTripleRoom = translateRepository.TranslateFromBg(this.LabelTripleRoom, toLang);
+                this.LabelRoomsCount = translateRepository.TranslateFromBg(this.LabelRoomsCount, toLang);
+                this.LabelLv = translateRepository.TranslateFromBg(this.LabelLv, toLang);
+                this.LabelFacilities = translateRepository.TranslateFromBg(this.LabelFacilities, toLang);
             }
         }
     }
