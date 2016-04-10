@@ -108,9 +108,13 @@ namespace HotelsServices.Repositories
         public List<SearchNom> GetHotels(string term, uint? parentId)
         {
             getHotelsRequest request = new getHotelsRequest();
-            request.term = term;
 
-            if(parentId.HasValue)
+            if (term == null)
+                request.term = "";
+            else
+                request.term = term;
+
+            if (parentId.HasValue)
             { 
                 request.city_id = parentId.Value;
             }

@@ -63,7 +63,11 @@ namespace HotelsServices.Repositories
         public List<SearchNom> GetCities(string term)
         {
             getCitiesRequest request = new getCitiesRequest();
-            request.term = term;
+
+            if (term == null)
+                request.term = "";
+            else
+                request.term = term;
 
             var response = service.getCities(request);
 
