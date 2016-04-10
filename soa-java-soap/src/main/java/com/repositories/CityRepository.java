@@ -46,6 +46,11 @@ public class CityRepository {
 		burgas.setId(6);
 		burgas.setName("Burgas");
 		cities.add(burgas);
+		
+		City pazardzhik = new City();
+		pazardzhik.setId(7);
+		pazardzhik.setName("Pazardzhik");
+		cities.add(pazardzhik);
 	}
 
 	public City findCity(long id) {

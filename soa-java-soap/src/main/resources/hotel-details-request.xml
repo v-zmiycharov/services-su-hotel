@@ -3,7 +3,7 @@
    <soapenv:Header/>
    <soapenv:Body>
       <gs:getHotelDetailsRequest>
-         <gs:id>6</gs:id>
+         <gs:id>10</gs:id>
       </gs:getHotelDetailsRequest>
    </soapenv:Body>
 </soapenv:Envelope>
