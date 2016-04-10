@@ -403,6 +403,7 @@ public partial class hotel {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("facility", IsNullable=false)]
     public string[] facilities {
         get {
             return this.facilitiesField;
