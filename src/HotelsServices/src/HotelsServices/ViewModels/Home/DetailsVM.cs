@@ -32,22 +32,22 @@ namespace HotelsServices.ViewModels.Home
 
         public DetailsVM()
         {
-            this.LabelSingleRoom = "Единична стая:";
-            this.LabelDoubleRoom = "Двойна стая:";
-            this.LabelTripleRoom = "Апартамент:";
-            this.LabelRoomsCount = "Брой стаи:";
-            this.LabelLv = "лева";
-            this.LabelFacilities = "Удобства";
+            this.LabelSingleRoom = "Single room:";
+            this.LabelDoubleRoom = "Double room:";
+            this.LabelTripleRoom = "Apartment:";
+            this.LabelRoomsCount = "Rooms count:";
+            this.LabelLv = "lev";
+            this.LabelFacilities = "Facilities";
         }
 
         public void Translate(ITranslateRepository translateRepository, string toLang)
         {
             if (!String.IsNullOrWhiteSpace(toLang))
             {
-                this.Name = translateRepository.TranslateFromBg(this.Name, toLang);
-                this.City = translateRepository.TranslateFromBg(this.City, toLang);
-                this.Address = translateRepository.TranslateFromBg(this.Address, toLang);
-                this.Description = translateRepository.TranslateFromBg(this.Description, toLang);
+                this.Name = translateRepository.Translate(this.Name, toLang);
+                this.City = translateRepository.Translate(this.City, toLang);
+                this.Address = translateRepository.Translate(this.Address, toLang);
+                this.Description = translateRepository.Translate(this.Description, toLang);
 
                 if (this.Facilities != null && this.Facilities.Count > 0)
                 {
@@ -57,15 +57,15 @@ namespace HotelsServices.ViewModels.Home
                     this.Facilities = new List<string>();
 
                     foreach (var facility in oldFacilities)
-                        this.Facilities.Add(translateRepository.TranslateFromBg(facility, toLang));
+                        this.Facilities.Add(translateRepository.Translate(facility, toLang));
                 }
 
-                this.LabelSingleRoom = translateRepository.TranslateFromBg(this.LabelSingleRoom, toLang);
-                this.LabelDoubleRoom = translateRepository.TranslateFromBg(this.LabelDoubleRoom, toLang);
-                this.LabelTripleRoom = translateRepository.TranslateFromBg(this.LabelTripleRoom, toLang);
-                this.LabelRoomsCount = translateRepository.TranslateFromBg(this.LabelRoomsCount, toLang);
-                this.LabelLv = translateRepository.TranslateFromBg(this.LabelLv, toLang);
-                this.LabelFacilities = translateRepository.TranslateFromBg(this.LabelFacilities, toLang);
+                this.LabelSingleRoom = translateRepository.Translate(this.LabelSingleRoom, toLang);
+                this.LabelDoubleRoom = translateRepository.Translate(this.LabelDoubleRoom, toLang);
+                this.LabelTripleRoom = translateRepository.Translate(this.LabelTripleRoom, toLang);
+                this.LabelRoomsCount = translateRepository.Translate(this.LabelRoomsCount, toLang);
+                this.LabelLv = translateRepository.Translate(this.LabelLv, toLang);
+                this.LabelFacilities = translateRepository.Translate(this.LabelFacilities, toLang);
             }
         }
     }

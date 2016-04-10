@@ -1,5 +1,5 @@
 ﻿var createSelect2 = function (selector, searchUrl, parentSelector) {
-    var placeholder = 'Търси';
+    var placeholder = 'Search';
     $(selector).select2({
         placeholder: placeholder,
         allowClear: true,

@@ -61,22 +61,21 @@ namespace HotelsServices.Repositories
             return new DetailsVM()
             {
                 Id = id,
-                Address = "бул. Д-р. Г.M. Димитров 75",
+                Address = "Boulevard GM Dimitrov",
                 PhoneNumber = "0888 123 456",
-                City = "София",
-                Description = @"За релаксацията и добрата форма на нашите гости е предвиден обширен спортен и възстановителен център. За любителите на фитнеса има модерно оборудвана зала с уреди и професионални фитнес инструктори. На разположение са естетически издържани стаи, в които се предлагат всякакви разпускащи процедури и масажни програми. Гостите и клиентите на центъра могат да се освободят от стреса и натрупаното напрежение със сауна и парна баня. За ободряване и пълно разтоварване са специалните ни масажни програми, а за добър, здравословен тен е предведена зала със солариум.
-                Хотелът предлага и модерен фризьорски салон.В тях работят доказани професионалисти,
-                които умеят и знаят как да се погрижат за добрия външен вид на клиентите.",
+                City = "Sofia",
+                Description = @"For relaxation and good shape of our guests is provided extensive sports and recreation center. For lovers of fitness has a well equipped gym with professional fitness instructors. There are aesthetically rooms, which offer all kinds of relaxing treatments and massage programs. Guests and clients of the center can get rid of stress and tension with sauna and steam bath. For refreshment and complete landing our special massage programs and a good, healthy tan is provided fire hall with solarium.
+                The hotel offers modern hairdressing salon.V employing proven professionals
+                who are able and know how to take care of the good appearance of the customers.",
                 Facilities = new List<string>()
                 {
-                    "Ресторант",
-                    "Фитнес",
-                    "СПА процедури",
-                    "Тери шоп",
-                    "Фризьорски салон",
-                    "Паркинг"
+                    "Restaurant",
+                    "Fitness",
+                    "SPA procedures",
+                    "Wi Fi",
+                    "Free parking"
                 },
-                Name = "Хотел Вега",
+                Name = "Hotel Vega",
                 SingleRoomPrice = 65,
                 DoubleRoomPrice = 75,
                 TripleRoomPrice = 85,

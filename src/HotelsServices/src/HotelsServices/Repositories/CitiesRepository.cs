@@ -20,9 +20,9 @@ namespace HotelsServices.Repositories
 
         private static List<SearchNom> _cities = new List<SearchNom>()
         {
-            new SearchNom(){id = 1, text = "София" },
-            new SearchNom(){id = 2, text = "Пловдив" },
-            new SearchNom(){id = 3, text = "Пазарджик" },
+            new SearchNom(){id = 1, text = "Sofia" },
+            new SearchNom(){id = 2, text = "Plovdiv" },
+            new SearchNom(){id = 3, text = "Pazardjik" },
         };
 
         public SearchNom GetCity(uint id)

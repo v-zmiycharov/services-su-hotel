@@ -15,18 +15,12 @@ namespace HotelsServices.Repositories
 {
     public interface ITranslateRepository
     {
-        string TranslateFromBg(string input, string toLang);
-        string Translate(string input, string toLang, string fromLang);
+        string Translate(string input, string toLang, string fromLang = "en");
     }
 
     public class FakeTranslateRepository : ITranslateRepository
     {
-        public string TranslateFromBg(string input, string toLang)
-        {
-            return Translate(input, toLang, "bg");
-        }
-
-        public string Translate(string input, string toLang, string fromLang)
+        public string Translate(string input, string toLang, string fromLang = "en")
         {
             return input;
         }
@@ -34,12 +28,7 @@ namespace HotelsServices.Repositories
 
     public class YandexTranslateRepository : ITranslateRepository
     {
-        public string TranslateFromBg(string input, string toLang)
-        {
-            return Translate(input, toLang, "bg");
-        }
-
-        public string Translate(string input, string toLang, string fromLang)
+        public string Translate(string input, string toLang, string fromLang = "en")
         {
             YandexTranslateResult yandexResult = null;
 
