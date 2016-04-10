@@ -1,5 +1,4 @@
-﻿using HotelsServices.Helpers;
-using HotelsServices.ViewModels.Home;
+﻿using HotelsServices.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +8,16 @@ namespace HotelsServices.Repositories
 {
     public interface ICitiesRepository
     {
+        CitiesPortService service { get; set; }
+
         SearchNom GetCity(uint id);
         List<SearchNom> GetCities(string term);
     }
 
-    public class FakeCitiesRepository: ICitiesRepository
+    public class FakeCitiesRepository : ICitiesRepository
     {
+        public CitiesPortService service { get; set; }
+
         private static List<SearchNom> _cities = new List<SearchNom>()
         {
             new SearchNom(){id = 1, text = "София" },
@@ -40,12 +43,19 @@ namespace HotelsServices.Repositories
 
     public class SoapCitiesRepository : ICitiesRepository
     {
+        public CitiesPortService service { get; set; }
+
+        public SoapCitiesRepository()
+        {
+            this.service = new CitiesPortService();
+        }
+
         public SearchNom GetCity(uint id)
         {
             getCityRequest request = new getCityRequest();
             request.id = id;
-
-            var response = SOAPHelper.CallCitiesWebService<getCityResponse, getCityRequest>(request);
+            
+            var response = service.getCity(request);
 
             return new SearchNom() { id = response.city.id, text = response.city.name };
         }
@@ -55,9 +65,9 @@ namespace HotelsServices.Repositories
             getCitiesRequest request = new getCitiesRequest();
             request.term = term;
 
-            var response = SOAPHelper.CallCitiesWebService<getCitiesResponse, getCitiesRequest>(request);
-            
-            return response.cities.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
+            var response = service.getCities(request);
+
+            return response.cities.Select(e => new SearchNom() { id = e.id, text = e.name }).ToList();
         }
     }
 }

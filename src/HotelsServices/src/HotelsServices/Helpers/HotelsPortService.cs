@@ -548,8 +548,6 @@ public partial class getHotelsRequest {
     
     private uint city_idField;
     
-    private bool city_idFieldSpecified;
-    
     /// <remarks/>
     public string term {
         get {
@@ -567,17 +565,6 @@ public partial class getHotelsRequest {
         }
         set {
             this.city_idField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    public bool city_idSpecified {
-        get {
-            return this.city_idFieldSpecified;
-        }
-        set {
-            this.city_idFieldSpecified = value;
         }
     }
 }

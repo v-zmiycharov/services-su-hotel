@@ -1,5 +1,4 @@
-﻿using HotelsServices.Helpers;
-using HotelsServices.ViewModels.Home;
+﻿using HotelsServices.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,8 @@ namespace HotelsServices.Repositories
 {
     public interface IHotelsRepository
     {
+        HotelsPortService service { get; set; }
+
         SearchNom GetHotel(uint id);
         List<SearchNom> GetHotels(string term, uint? parentId);
         DetailsVM GetHotelDetails(uint id);
@@ -16,6 +17,8 @@ namespace HotelsServices.Repositories
 
     public class FakeHotelsRepository : IHotelsRepository
     {
+        public HotelsPortService service { get; set; }
+
         private static List<SearchNom> _hotels = new List<SearchNom>()
         {
             new SearchNom(){id = 1, text = "Плиска", parentId = 1 },
@@ -85,12 +88,19 @@ namespace HotelsServices.Repositories
 
     public class SoapHotelsRepository : IHotelsRepository
     {
+        public HotelsPortService service { get; set; }
+
+        public SoapHotelsRepository()
+        {
+            this.service = new HotelsPortService();
+        }
+
         public SearchNom GetHotel(uint id)
         {
             getHotelRequest request = new getHotelRequest();
             request.id = id;
 
-            var response = SOAPHelper.CallHotelsWebService<getHotelResponse, getHotelRequest>(request);
+            var response = service.getHotel(request);
 
             return new SearchNom() { id = response.hotel.id, text = response.hotel.name };
         }
@@ -105,7 +115,7 @@ namespace HotelsServices.Repositories
                 request.city_id = parentId.Value;
             }
 
-            var response = SOAPHelper.CallHotelsWebService<getHotelsResponse, getHotelsRequest>(request);
+            var response = service.getHotels(request);
 
             return response.hotels.Select(e => new SearchNom() {id = e.id, text = e.name }).ToList();
         }
@@ -115,7 +125,7 @@ namespace HotelsServices.Repositories
             getHotelDetailsRequest request = new getHotelDetailsRequest();
             request.id = id;
 
-            var response = SOAPHelper.CallHotelsWebService<getHotelDetailsResponse, getHotelDetailsRequest>(request);
+            var response = service.getHotelDetails(request);
 
             return new DetailsVM()
             {
