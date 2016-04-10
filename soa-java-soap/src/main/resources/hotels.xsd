@@ -111,9 +111,11 @@
     	</xs:sequence>
     </xs:complexType>
     
-    <xs:simpleType name="facilities">
-    	<xs:list itemType="xs:string"/>
-    </xs:simpleType>
+    <xs:complexType name="facilities">
+    	<xs:sequence>
+    		<xs:element name="facility" type="xs:string" maxOccurs="20"/>
+    	</xs:sequence>
+    </xs:complexType>
     
     <xs:simpleType name="category">
     	<xs:restriction base="xs:string">
