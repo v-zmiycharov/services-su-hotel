@@ -110,7 +110,7 @@
     		<xs:element name="triple_room" type="xs:unsignedInt"/>
     	</xs:sequence>
     	
-    	<xs:attribute name="currency" type="xs:string" use="required" default="EUR"/>
+    	<xs:attribute name="currency" type="xs:string" use="optional" default="EUR"/>
     </xs:complexType>
     
     <xs:complexType name="facilities">

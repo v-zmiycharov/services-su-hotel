@@ -248,6 +248,12 @@ public partial class price_list {
     
     private uint triple_roomField;
     
+    private string currencyField;
+    
+    public price_list() {
+        this.currencyField = "EUR";
+    }
+    
     /// <remarks/>
     public uint single_room {
         get {
@@ -275,6 +281,18 @@ public partial class price_list {
         }
         set {
             this.triple_roomField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    [System.ComponentModel.DefaultValueAttribute("EUR")]
+    public string currency {
+        get {
+            return this.currencyField;
+        }
+        set {
+            this.currencyField = value;
         }
     }
 }
