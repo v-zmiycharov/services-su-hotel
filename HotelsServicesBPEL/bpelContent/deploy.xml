@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:cities.sources.com="http://cities.sources.com" xmlns:hotels.sources.com="http://hotels.sources.com">
+  <process name="cities.sources.com:CitiesProcess.bpel">
+    <active>true</active>
+    <retired>false</retired>
+  </process>
+  <process name="hotels.sources.com:HotelsProcess.bpel">
+    <active>true</active>
+    <retired>false</retired>
+  </process>
+</deploy>

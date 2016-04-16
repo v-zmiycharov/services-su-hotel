@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpel:process exitOnStandardFault="yes" name="HotelsProcess.bpel"
+    targetNamespace="http://hotels.sources.com"
+    xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:ns="http://hotels.sources.comArtifacts" xmlns:ns0="http://hotels.sources.com">
+    <bpel:import importType="http://schemas.xmlsoap.org/wsdl/"
+        location="hotels.wsdl" namespace="http://hotels.sources.com"/>
+    <bpel:import importType="http://schemas.xmlsoap.org/wsdl/"
+        location="HotelsProcessArtifacts.wsdl" namespace="http://hotels.sources.comArtifacts"/>
+    <bpel:partnerLinks>
+        <bpel:partnerLink myRole="HotelsPortRole"
+            name="bpelProcessPartner" partnerLinkType="ns:HotelsPortPLT"/>
+    </bpel:partnerLinks>
+    <bpel:variables>
+        <bpel:variable element="ns0:getHotelDetailsRequest" name="getHotelDetailsRequest"/>
+        <bpel:variable element="ns0:getHotelDetailsResponse" name="getHotelDetailsResponse"/>
+        <bpel:variable element="ns0:getHotelRequest" name="getHotelRequest"/>
+        <bpel:variable element="ns0:getHotelResponse" name="getHotelResponse"/>
+        <bpel:variable element="ns0:getHotelsRequest" name="getHotelsRequest"/>
+        <bpel:variable element="ns0:getHotelsResponse" name="getHotelsResponse"/>
+    </bpel:variables>
+    <bpel:sequence name="MainSequence">
+        <bpel:pick createInstance="yes" name="SwitchInvokedOperation">
+            <bpel:onMessage operation="getHotelDetails"
+                partnerLink="bpelProcessPartner"
+                portType="ns0:HotelsPort" variable="getHotelDetailsRequest">
+                <bpel:reply name="ReplyToGetHotelDetails"
+                    operation="getHotelDetails"
+                    partnerLink="bpelProcessPartner"
+                    portType="ns0:HotelsPort" variable="getHotelDetailsResponse"/>
+            </bpel:onMessage>
+            <bpel:onMessage operation="getHotel"
+                partnerLink="bpelProcessPartner"
+                portType="ns0:HotelsPort" variable="getHotelRequest">
+                <bpel:reply name="ReplyToGetHotel" operation="getHotel"
+                    partnerLink="bpelProcessPartner"
+                    portType="ns0:HotelsPort" variable="getHotelResponse"/>
+            </bpel:onMessage>
+            <bpel:onMessage operation="getHotels"
+                partnerLink="bpelProcessPartner"
+                portType="ns0:HotelsPort" variable="getHotelsRequest">
+                <bpel:reply name="ReplyToGetHotels"
+                    operation="getHotels"
+                    partnerLink="bpelProcessPartner"
+                    portType="ns0:HotelsPort" variable="getHotelsResponse"/>
+            </bpel:onMessage>
+        </bpel:pick>
+    </bpel:sequence>
+</bpel:process>

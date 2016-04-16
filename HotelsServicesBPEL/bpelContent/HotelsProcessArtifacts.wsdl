@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns:tns="http://hotels.sources.com" targetNamespace="http://hotels.sources.comArtifacts" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <partnerLinkType name="HotelsPortPLT" xmlns="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+    <role name="HotelsPortRole" portType="tns:HotelsPort"/>
+  </partnerLinkType>
+  <import location="hotels.wsdl" namespace="http://hotels.sources.com"/>
+</definitions>

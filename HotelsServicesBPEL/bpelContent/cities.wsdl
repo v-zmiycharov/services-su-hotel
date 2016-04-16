@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://cities.sources.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://cities.sources.com" targetNamespace="http://cities.sources.com">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://cities.sources.com">
+           
+    <xs:element name="getCityRequest">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="id" type="xs:unsignedInt"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getCityResponse">
+    	<xs:complexType>
+    		<xs:sequence>
+    			<xs:element name="city" type="tns:city"/>
+    		</xs:sequence>
+    	</xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCitiesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="term" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCitiesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="cities" type="tns:cities"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="cities">
+    	<xs:sequence>
+    		<xs:element maxOccurs="unbounded" name="city" type="tns:city"/>
+    	</xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="city">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+        
+        <xs:attribute name="id" type="xs:unsignedInt" use="required"/>
+    </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCityRequest">
+    <wsdl:part element="tns:getCityRequest" name="getCityRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCityResponse">
+    <wsdl:part element="tns:getCityResponse" name="getCityResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCitiesRequest">
+    <wsdl:part element="tns:getCitiesRequest" name="getCitiesRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCitiesResponse">
+    <wsdl:part element="tns:getCitiesResponse" name="getCitiesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CitiesPort">
+    <wsdl:operation name="getCity">
+      <wsdl:input message="tns:getCityRequest" name="getCityRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getCityResponse" name="getCityResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCities">
+      <wsdl:input message="tns:getCitiesRequest" name="getCitiesRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getCitiesResponse" name="getCitiesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CitiesPortSoap11" type="tns:CitiesPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getCity">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getCityRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCityResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCities">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getCitiesRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCitiesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CitiesPortService">
+    <wsdl:port binding="tns:CitiesPortSoap11" name="CitiesPortSoap11">
+      <soap:address location="http://localhost:8080/ws/cities"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

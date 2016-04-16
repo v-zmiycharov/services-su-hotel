@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns:tns="http://cities.sources.com" targetNamespace="http://cities.sources.comArtifacts" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <partnerLinkType name="CitiesPortPLT" xmlns="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+    <role name="CitiesPortRole" portType="tns:CitiesPort"/>
+  </partnerLinkType>
+  <import location="cities.wsdl" namespace="http://cities.sources.com"/>
+</definitions>

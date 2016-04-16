@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpel:process exitOnStandardFault="yes" name="CitiesProcess.bpel"
+    targetNamespace="http://cities.sources.com"
+    xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:ns="http://cities.sources.comArtifacts" xmlns:ns0="http://cities.sources.com">
+    <bpel:import importType="http://schemas.xmlsoap.org/wsdl/"
+        location="cities.wsdl" namespace="http://cities.sources.com"/>
+    <bpel:import importType="http://schemas.xmlsoap.org/wsdl/"
+        location="CitiesProcessArtifacts.wsdl" namespace="http://cities.sources.comArtifacts"/>
+    <bpel:partnerLinks>
+        <bpel:partnerLink myRole="CitiesPortRole"
+            name="bpelProcessPartner" partnerLinkType="ns:CitiesPortPLT"/>
+    </bpel:partnerLinks>
+    <bpel:variables>
+        <bpel:variable element="ns0:getCityRequest" name="getCityRequest"/>
+        <bpel:variable element="ns0:getCityResponse" name="getCityResponse"/>
+        <bpel:variable element="ns0:getCitiesRequest" name="getCitiesRequest"/>
+        <bpel:variable element="ns0:getCitiesResponse" name="getCitiesResponse"/>
+    </bpel:variables>
+    <bpel:sequence name="MainSequence">
+        <bpel:pick createInstance="yes" name="SwitchInvokedOperation">
+            <bpel:onMessage operation="getCity"
+                partnerLink="bpelProcessPartner"
+                portType="ns0:CitiesPort" variable="getCityRequest">
+                <bpel:reply name="ReplyToGetCity" operation="getCity"
+                    partnerLink="bpelProcessPartner"
+                    portType="ns0:CitiesPort" variable="getCityResponse"/>
+            </bpel:onMessage>
+            <bpel:onMessage operation="getCities"
+                partnerLink="bpelProcessPartner"
+                portType="ns0:CitiesPort" variable="getCitiesRequest">
+                <bpel:reply name="ReplyToGetCities"
+                    operation="getCities"
+                    partnerLink="bpelProcessPartner"
+                    portType="ns0:CitiesPort" variable="getCitiesResponse"/>
+            </bpel:onMessage>
+        </bpel:pick>
+    </bpel:sequence>
+</bpel:process>
